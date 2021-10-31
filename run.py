@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -55,12 +54,11 @@ def validate_data(values):
     return True
 
 
-def update_sales_worksheet(data):
-    """Update sales worksheet, add new row with the list data provided."""
-    print("Updating sales worksheet ...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated succussfully.\n")
+def update_worksheet(data, worksheet):
+    print(f"Updating {worksheet} worksheet ...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated succussfullt.\n")
 
 
 def calculate_surplus_data(sales_row):
@@ -74,12 +72,12 @@ def calculate_surplus_data(sales_row):
     print("Caluculating surplus data ...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+
     surplus_data = []
-    for stock,sales in zip(stock_row,sales_row):
+    for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
-    
+
     return surplus_data
 
 
@@ -87,9 +85,9 @@ def main():
     """ Run all program function """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 
 print("Welcome to love sandwhices data automation\n")
