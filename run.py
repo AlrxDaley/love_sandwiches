@@ -21,7 +21,7 @@ def get_sales_data():
         print("Data should be six numbers, sperated by commas.")
         print("Example: 30,20,20,10,24,30\n")
 
-        data_str = input("Enter your data here:\n")
+        data_str = input("Enter your data here: \n")
         print(f"The data provided is {data_str}")
 
         sale_data = data_str.split(",")
@@ -62,8 +62,7 @@ def update_worksheet(data, worksheet):
 
 
 def calculate_surplus_data(sales_row):
-    """ 
-    Compare sales with stock and calculate the surplus for each item type.
+    """Compare sales with stock and calculate the surplus for each item type.
 
     The surplus is defined as the sales figure subtracted from the stock:
     - positive surplus indicates waste
@@ -82,8 +81,7 @@ def calculate_surplus_data(sales_row):
 
 
 def get_last_5_entries_sales():
-    """
-    Collects collumns of data from sales worksheet, collecting the last 5 
+    """Collects collumns of data from sales worksheet, collecting the last 5
     entries for each sandwich and returns the data
     as a list of lists
     """
@@ -94,7 +92,6 @@ def get_last_5_entries_sales():
     for ind in range(1, 7):
         column = sales.col_values(ind)
         columns.append(column[-5:])
-    
     return columns
 
 
@@ -111,7 +108,6 @@ def calculate_stock_data(data):
         average = sum(int_column) / len(int_column)
         stock_num = average * 1.1
         new_stock_data.append(round(stock_num))
-    
     return new_stock_data
 
 
